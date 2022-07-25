@@ -14,14 +14,12 @@ class Audio:
 
     def check_url(self):
         try:
-            print(self.url)
             self.yt = YouTube(self.url)
             self.mp4_files = self.yt.streams.filter(file_extension="mp4")
             return True
         except Exception as e:
             print(e)
             return False
-
 
     def download_video(self):
         mp4_144p_files = self.mp4_files.get_by_resolution("360p")
@@ -33,13 +31,14 @@ class Audio:
     def convert_to_mp3(self):
         video = VideoFileClip(os.path.join(self.CURRENT_DIR + self.file_name + ".mp4"))
         video.audio.write_audiofile(os.path.join(self.file_name + ".mp3"))
+        video.close()
 
         self.file = open(self.file_name + ".mp3", 'rb')
 
     def __del__(self):
-        print('destructor was called')
         try:
+            self.file.close()
             os.remove(self.CURRENT_DIR + self.file_name + ".mp4")
             os.remove(self.CURRENT_DIR + self.file_name + ".mp3")
-        except:
-            pass
+        except Exception as e:
+            print(e)

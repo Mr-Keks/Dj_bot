@@ -34,13 +34,8 @@ async def find_music(message: types.Message, state: FSMContext):
         await message.answer("Ось, насолоджуйся :)")
         await sleep(0.1)
 
-        print('before')
-        #await bot.send_audio(message.from_user.id, audio=audio.file)
         await message.answer_audio(audio=audio.file)
-        print('end')
-
         await state.finish()
-
     else:
         await message.answer("Я нажаль не можу знайти нічого за цією адресою(", reply_markup=default.failTry_kb)
 
