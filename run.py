@@ -6,7 +6,8 @@ from loader import dp
 
 logging.basicConfig(level=logging.INFO)
 
-async def on_sturtup(dispatcher):
+
+async def on_sturtup(dp):
     import hendlers
 
     hendlers.setup(dp)
