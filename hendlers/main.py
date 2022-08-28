@@ -37,12 +37,12 @@ async def download_music(message: types.Message, yt, mp4):
     await message.answer('Зачекай трішки, це може зайняти декілька секунд')
 
     audio = Audio(yt, mp4)
-    res = await audio.convert_to_mp3()
+    res, title = await audio.download_video()
 
     await message.answer("Ось, насолоджуйся :)")
     await sleep(0.1)
 
-    await message.answer_audio(audio=res, reply_markup=default.failTry_kb)
+    await message.answer_audio(audio=res, reply_markup=default.failTry_kb, title=title)
 
 
 async def fail_try(message: types.Message):
