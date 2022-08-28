@@ -10,7 +10,7 @@ from aiogram import types
 async def start_work(message: types.Message):
     await message.answer("Привіт!")
     await sleep(0.5)
-    await message.answer("Я бот який допоможе тобі завантажити твою улюблену музику в телеграм!")
+    await message.answer("Я бот який допоможе тобі завантажити твою улюблену музику з ютубу в телеграм!")
     await sleep(0.5)
     await message.answer("Натискай 'Шукати' щоб почати роботу", reply_markup=find_kb)
 
