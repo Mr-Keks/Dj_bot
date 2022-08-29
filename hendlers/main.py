@@ -1,5 +1,7 @@
 from asyncio import sleep
 
+import aiogram
+
 from loader import dp
 from states.download import Download
 from dw import Audio, check_url
@@ -43,8 +45,10 @@ async def download_music(message: types.Message, yt, mp4):
 
     await message.answer("Ось, насолоджуйся :)")
     await sleep(0.1)
-
-    await message.answer_audio(audio=res, reply_markup=default.failTry_kb, title=title)
+    try:
+        await message.answer_audio(audio=res, reply_markup=default.failTry_kb, title=title)
+    except aiogram.exceptions.NetworkError:
+        await message.answer("Вибач, але файл занадто великий, дозволено тільки до 50Мб((")
 
 
 async def fail_try(message: types.Message):
