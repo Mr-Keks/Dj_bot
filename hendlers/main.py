@@ -43,10 +43,11 @@ async def download_music(message: types.Message, yt, mp4):
     audio = Audio(yt, mp4)
     res, title = await audio.download_video()
 
-    await message.answer("Ось, насолоджуйся :)")
-    await sleep(0.1)
+
     try:
         await message.answer_audio(audio=res, reply_markup=default.failTry_kb, title=title)
+        await sleep(0.1)
+        await message.answer("Ось, насолоджуйся :)")
     except aiogram.exceptions.NetworkError:
         await message.answer("Вибач, але файл занадто великий, дозволено тільки до 50Мб((")
 
