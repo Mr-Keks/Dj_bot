@@ -6,10 +6,12 @@ from dw import Audio, check_url
 from keyboards import default
 from aiogram import types
 from aiogram.dispatcher import FSMContext
+from utils.misc.throttling import rate_limit
 
 
 @dp.message_handler(state=Download.begin)
 @dp.message_handler(text=["Шукати знову", "Шукати"])
+@rate_limit(1)
 async def get_url(message: types.Message):
     await message.answer("Надішли мені посилання на пісню, яку ти хочеш завантажити")
     await Download.url.set()
@@ -17,10 +19,10 @@ async def get_url(message: types.Message):
 
 @dp.message_handler(state=Download.url)
 async def find_music(message: types.Message, state: FSMContext):
+    await state.finish()
     await message.answer("Зараз спробую знайти!")
     await sleep(0.5)
     await check_url_validation(message, message.text)
-    await state.finish()
 
 
 async def check_url_validation(message: types.Message, url: str):
@@ -46,4 +48,4 @@ async def download_music(message: types.Message, yt, mp4):
 
 
 async def fail_try(message: types.Message):
-    await message.answer("Я нажаль не можу знайти нічого за цією адресою(", reply_markup=default.failTry_kb)
+    await message.reply("Я нажаль не можу знайти нічого за цією адресою(", reply_markup=default.failTry_kb)

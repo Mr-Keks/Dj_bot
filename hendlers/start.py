@@ -4,9 +4,10 @@ from loader import dp
 from states.download import Download
 from keyboards.default import find_kb
 from aiogram import types
-
+from utils.misc.throttling import rate_limit
 
 @dp.message_handler(commands=['start'])
+@rate_limit(1)
 async def start_work(message: types.Message):
     await message.answer("Привіт!")
     await sleep(0.5)
